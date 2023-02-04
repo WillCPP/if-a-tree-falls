@@ -4,7 +4,7 @@ import random
 class Background:
     
     def __init__(self):
-        self._bg_array = []
+        self.bg_array = []
         self.bg_args = []
         self._gen_bg()
         return
@@ -27,10 +27,10 @@ class Background:
         
         sky_array = [self._gen_row_sky() for x in range(5)]
         ground_array = [self._gen_row_ground() for x in range(10)]
-        self._bg_array = sky_array + ground_array
-        for i, x in enumerate(self._bg_array):
+        self.bg_array = sky_array + ground_array
+        for i, x in enumerate(self.bg_array):
             for j, y in enumerate(x):
-                self.bg_args.append((block_array[self._bg_array[i][j]], (j*32, i*32)))
+                self.bg_args.append((block_array[self.bg_array[i][j]], (j*32, i*32)))
 
     def _gen_row_sky(self):
         row = [5 for x in range(32)]
