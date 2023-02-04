@@ -1,11 +1,13 @@
 import pygame
 from game.Actor import Actor
 from game.graphics.Background import Background
+from game.graphics.Cursor import Cursor
 
 class Game:
 
     def __init__(self):
         self.bg = Background()
+        self.cursor = Cursor()
         return
 
     def start(self):
