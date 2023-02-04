@@ -10,15 +10,33 @@ class Background:
         return
 
     def _gen_bg(self):
-        block = pygame.Surface((32, 32))
-        block.fill(pygame.Color("lightgoldenrod"))
-        block2 = pygame.Surface((32, 32))
-        block2.fill(pygame.Color("lightgray"))
-        self._bg_array = [self._gen_row() for x in range(15)] 
+        block_sky = pygame.Surface((32, 32))
+        block_sky.fill(pygame.Color("cadetblue2"))
+        block_soil = pygame.Surface((32, 32))
+        block_soil.fill(pygame.Color("brown1"))
+        block_groundwater = pygame.Surface((32, 32))
+        block_groundwater.fill(pygame.Color("blue4"))
+        block_organic = pygame.Surface((32, 32))
+        block_organic.fill(pygame.Color("brown4"))
+        block_sand = pygame.Surface((32, 32))
+        block_sand.fill(pygame.Color("sandybrown"))
+        block_clay = pygame.Surface((32, 32))
+        block_clay.fill(pygame.Color("darkgrey"))
+        
+        block_array = [block_soil, block_groundwater, block_organic, block_sand, block_clay, block_sky]
+        
+        sky_array = [self._gen_row_sky() for x in range(5)]
+        ground_array = [self._gen_row_ground() for x in range(10)]
+        self._bg_array = sky_array + ground_array
         for i, x in enumerate(self._bg_array):
             for j, y in enumerate(x):
-                self.bg_args.append((block if ((i+j)%2) == 0 else block2, (j*32, i*32)))
+                self.bg_args.append((block_array[self._bg_array[i][j]], (j*32, i*32)))
 
-    def _gen_row(self):
-        row = [random.choice(range(5)) for x in range(32)]
+    def _gen_row_sky(self):
+        row = [5 for x in range(32)]
+        return row
+
+    def _gen_row_ground(self):
+        w_array = [50, 10, 10, 15, 5]
+        row = [random.choices(range(5), weights=w_array, k=1)[0] for x in range(32)]
         return row
