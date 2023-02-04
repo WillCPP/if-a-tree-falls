@@ -1,7 +1,6 @@
 import pygame
-from game.Actor import Actor
 from game.graphics.Background import Background
-from game.graphics.Cursor import Cursor
+from game.Cursor import Cursor
 
 class Game:
 
@@ -12,25 +11,32 @@ class Game:
 
     def start(self):
         pygame.init()
+        pygame.key.set_repeat(250)
         screen = pygame.display.set_mode((1024, 480))
-        sprites = pygame.sprite.Group()
-        Actor(sprites)
         clock = pygame.time.Clock()
-        dt = 0
         while True:
             events = pygame.event.get()
             for e in events:
                 if e.type == pygame.QUIT:
                     return
+                if e.type == pygame.KEYDOWN:
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_UP]:
+                        self.cursor.move_up()
+                    if keys[pygame.K_DOWN]:
+                        self.cursor.move_down()
+                    if keys[pygame.K_LEFT]:
+                        self.cursor.move_left()
+                    if keys[pygame.K_RIGHT]:
+                        self.cursor.move_right()
 
-            sprites.update(events, dt)
             
             #screen.fill((30, 30, 30))
             self.draw_background(screen)
-            sprites.draw(screen)
+            self.cursor.draw(screen)
             pygame.display.update()
 
-            dt = clock.tick(60)
+            clock.tick(60)
 
     def draw_background(self, screen):
         screen.blits(tuple(self.bg.bg_args))
