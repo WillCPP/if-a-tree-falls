@@ -1,5 +1,5 @@
 import pygame
-import game.Actor
+from game.Actor import Actor
 
 #class Actor(pygame.sprite.Sprite):
 #    def __init__(self, *args):
@@ -39,9 +39,12 @@ import game.Actor
 #    main()
 
 
-class Game(self):
+class Game():
 
-    def start():
+    def __init__(self):
+        return
+
+    def start(self):
         pygame.init()
         screen = pygame.display.set_mode((500, 500))
         sprites = pygame.sprite.Group()
