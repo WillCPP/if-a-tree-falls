@@ -193,6 +193,14 @@ class Node():
 #class BranchNodes(Node):
 #class BlockGrid(groundArray):
 
+    def upgradeStage(self):
+        if self.nodeType == "New Branch" :
+            return "Medium Branch"
+        elif self.nodeType == "Medium Branch" :
+            return "Large Branch"
+        else:
+            return None
+
 class Tree:
     rootList = []
     branchList = []
@@ -346,14 +354,16 @@ class Tree:
         if nodeId != -1:
             node = getBranch(nodeId)
             requirement = requirementDict[node.nodeType]
+            upgrade = node.upgradeStage()
             if checkRequirements(requirement, self.resourceStock):
-                print("Upgrading")
-                return "An image File"
+                if upgrade is not None:
+                    print("Upgrading to " + upgrade)
+                    node.addCondition(upgrade)
+                    return "An image File"
             else:
                 print("Cant afford upgrade")
         else:
             print("No branch")
-
 
 
 
