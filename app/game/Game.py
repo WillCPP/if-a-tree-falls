@@ -37,7 +37,7 @@ class Game:
 
             
             #screen.fill((30, 30, 30))
-            self.draw_background(screen)
+            self.bg.draw_background(screen)
             self.cursor.draw(screen)
             self.ui.update_ui_surface(5, 5, 5)
             self.ui.draw_ui(screen)
@@ -45,8 +45,3 @@ class Game:
 
             clock.tick(60)
 
-    def draw_background(self, screen):
-        screen.blits(tuple(self.bg.bg_args))
-        
-    def draw_ui(self, screen):
-        screen.blit(self.ui.ui_surface, (self.ui.pos_x, self.ui.pos_y))

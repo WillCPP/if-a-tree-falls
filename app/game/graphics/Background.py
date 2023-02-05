@@ -40,3 +40,6 @@ class Background:
         w_array = [50, 10, 10, 15, 5]
         row = [random.choices(range(5), weights=w_array, k=1)[0] for x in range(32)]
         return row
+
+    def draw_background(self, screen):
+        screen.blits(tuple(self.bg_args))
