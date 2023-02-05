@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from .Block import *
 from .Resource import *
 from .Condition import *
+from .Requirement import *
+from .Health import *
 import copy
 
 class ResourceStock():
@@ -189,6 +191,7 @@ class Tree:
     updateCheck = []
     maxGridSizeX = 31
     maxGridSizeY = 14
+
     #dict with id of resource as key
     resourceStock = {"Sun": 0, "Water": 0, "Nutrients": 0}
     BlockGrid = []
@@ -212,21 +215,15 @@ class Tree:
         self.rootList.append(startRoot)
         self.BlockGrid[startingPoint.y][startingPoint.x]["NodeId"] = self.rootIdCounter
         self.rootIdCounter += 1
-        startBranch = Node(self.branchIdCounter, "Branch", startBranchPoint, self.BlockGrid[startBranchPoint.y][startBranchPoint.x].get("Block"),-1, startBranchPoint)
+        startBranch = Node(self.branchIdCounter, "New Branch", startBranchPoint, self.BlockGrid[startBranchPoint.y][startBranchPoint.x].get("Block"),-1, startBranchPoint)
+        self.BlockGrid[startingPoint.y][startingPoint.x]["NodeId"] = self.branchIdCounter
         self.branchList.append(startBranch)
         self.branchIdCounter += 1
+        self.treeHealth = TreeHealth(50, 50)
 
 
     def __repr__(self):
         return "Tree: Resource Stock: " #+ self.resourceStock
-
-    # def updateResources(self, flow, flowDirection):
-    #     id = flow.resource.id
-    #     currentStock = self.resourceStock.get(id)
-    #     if flowDirection:
-    #         self.resourceStock.update(id, currentStock + flow.rate)
-    #     else:
-    #         self.resourceStock.update(id, currentStock - flow.rate)
 
     def updateRoots(self):
         for root in self.rootList:
@@ -241,11 +238,16 @@ class Tree:
     def update(self):
         self.updateRoots()
         self.updateBranch()
+        return self.treeHealth.updateHealth(self.resourceStock)
 
+    def getBranch(self, id):
+        for branch in self.branchList:
+            if branch.id == Id:
+                return branch
+        return None
 
     def getParentRoot(self, parentId):
         for root in self.rootList:
-            print ("THE ROOOTS: " + str(root.id))
             if root.id == parentId:
                 return root
         return None
@@ -271,12 +273,23 @@ class Tree:
         self.rootIdCounter += 1
         return listDict
 
+
+
     def positionBlockInfo(self, x, y):
         return Block(self.BlockGrid[y][x].get("Block"))
 
     def rootOnBlock(self, x, y):
         if x < 0 or y < 0 or x > self.maxGridSizeX or y > self.maxGridSizeY:
             print("Root check off grid")
+            return -1
+        nodeId = self.BlockGrid[y][x].get("NodeId")
+        if  nodeId!= -1:
+            return nodeId
+        return -1
+
+    def branchOnBlock(self, x, y):
+        if x < 0 or y < 0 or x > self.maxGridSizeX or y > self.maxGridSizeY:
+            print("branch check off grid")
             return -1
         nodeId = self.BlockGrid[y][x].get("NodeId")
         if  nodeId!= -1:
@@ -292,17 +305,34 @@ class Tree:
         eastRoot = self.rootOnBlock(x+1 ,y)
         southRoot =  self.rootOnBlock(x , y-1)
         pos = Position(x,y)
-        if northRoot != -1:
-            return self.addRoot(pos, northRoot)
-        elif westRoot != -1:
-            return self.addRoot(pos, westRoot)
-        elif eastRoot != -1:
-            return self.addRoot(pos, eastRoot)
-        elif southRoot != -1:
-            return self.addRoot(pos, southRoot)
+        if checkRequirements(requirementDict["New Root"], self.resourceStock):
+            if northRoot != -1:
+                return self.addRoot(pos, northRoot)
+            elif westRoot != -1:
+                return self.addRoot(pos, westRoot)
+            elif eastRoot != -1:
+                return self.addRoot(pos, eastRoot)
+            elif southRoot != -1:
+                return self.addRoot(pos, southRoot)
+            else:
+                print("No root found near position X " + str(x) + " Y " + str(y))
         else:
-            print("No root found near position X " + str(x) + " Y " + str(y))
-            return None
+            print("Can't afford new root")
+        return None
+
+    def tryBranch(self,x , y):
+        nodeId = self.branchOnBlock(x, y)
+        if nodeId != -1:
+            node = getBranch(nodeId)
+            requirement = requirementDict[node.nodeType]
+            if checkRequirements(requirement, self.resourceStock):
+                print("Upgrading")
+                return "An image File"
+            else:
+                print("Cant afford upgrade")
+        else:
+            print("No branch")
+
 
 
 

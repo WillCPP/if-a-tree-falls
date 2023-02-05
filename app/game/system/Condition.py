@@ -27,7 +27,7 @@ class Modifiers:
 
 conditionDict = {
     "Root" : Condition(0,"Root", "", [Modifiers("Sun", lambda a : a - 2), Modifiers("Water", lambda a : a - 1), Modifiers("Nutrients", lambda a : a - 1)]),
-    "Branch" : Condition(1,"Branch", "", [Modifiers("Sun", lambda a : a + 20), Modifiers("Water", lambda a : a - 4), Modifiers("Nutrients", lambda a : a - 4)]),
+    "New Branch" : Condition(1,"New Branch", "", [Modifiers("Sun", lambda a : a + 20), Modifiers("Water", lambda a : a - 4), Modifiers("Nutrients", lambda a : a - 4)]),
     "Large" : Condition(2,"Large", "", [Modifiers("All", lambda a : a * 4)]),
     "Medium" : Condition(3,"Medium", "", [Modifiers("All", lambda a : a * 2)]),
     "Small" : Condition(4,"Small", "", [Modifiers("All", lambda a : a * 1)]),
