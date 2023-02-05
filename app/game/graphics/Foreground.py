@@ -7,6 +7,7 @@ class Foreground:
         self.fg_array = []
         self.fg_args = []
         self._root_dict = {}
+        self._tree = None
         return
 
     def load_images(self):
@@ -25,6 +26,7 @@ class Foreground:
         self._root_dict["Root_WE"] = pygame.image.load("resources/roots/Root_WE.png")
         self._root_dict["Root_W"] = pygame.image.load("resources/roots/Root_W.png")
         self._root_dict["Root_NWE"] = pygame.image.load("resources/roots/Root_NWE.png")
+        self._tree = pygame.image.load("resources/tree.png")
 
     def addFGElement(self, l):
         if l is None:
@@ -34,6 +36,7 @@ class Foreground:
 
     def _build_args(self):
         self.fg_args = [(self._root_dict[b["file"]], (b["x"] * 32, b["y"] * 32)) for b in self.fg_array]
+        self.fg_args.append((self._tree, (12*32, 0)))
  
     def draw_foreground(self, screen):
         self._build_args()
