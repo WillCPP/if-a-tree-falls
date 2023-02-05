@@ -22,8 +22,10 @@ class UI:
         self._surfaces["info"]["surface"] = self._res_uis[5]
         self._surfaces["win"] = {"text": "You Win!", "x": 256, "y": 128}
         self._surfaces["lose"] = {"text": "You Lose.", "x": 256, "y": 128}
+        self._surfaces["lose2"] = {"x": 0, "y": 0}
         self._surfaces["win"]["surface"] = self._font_end.render(self._surfaces["win"]["text"], True, (0, 0, 0))
         self._surfaces["lose"]["surface"] = self._font_end.render(self._surfaces["lose"]["text"], True, (0, 0, 0))
+        self._surfaces["lose2"]["surface"] = pygame.image.load("resources/ui/you-lose.png")
 
     def update_ui_surface(self, id, resources, treehealth):
         sun = resources["Sun"]
@@ -47,4 +49,5 @@ class UI:
         if win and not lose:
             screen.blit(self._surfaces["win"]["surface"], (self._surfaces["win"]["x"], self._surfaces["win"]["y"]))
         if lose and not win:
-            screen.blit(self._surfaces["lose"]["surface"], (self._surfaces["lose"]["x"], self._surfaces["lose"]["y"]))
+            screen.blit(self._surfaces["lose2"]["surface"], (self._surfaces["lose2"]["x"], self._surfaces["lose2"]["y"]))
+

@@ -57,7 +57,7 @@ class Game:
                 self.win = True
 
             t_e = time.time()
-            if t_e - t_s > 2:
+            if t_e - t_s > 1:
                 self.tree.update()
                 t_s = t_e
 
