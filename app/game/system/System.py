@@ -250,6 +250,7 @@ class Tree:
         for branch in self.branchList:
             for resource in branch.calculateFlows():
                     self.resourceStock.update({resource.name: resource.value+ self.resourceStock[resource.name]})
+
     def  updateTree(self):
         self.resourceStock.update({"Sun": 15 + self.resourceStock["Sun"]})
         self.resourceStock.update({"Water": 15 + self.resourceStock["Water"]})
@@ -260,11 +261,8 @@ class Tree:
 
     def update(self):
         self.resourceStock = {"Sun": 15, "Water": 15, "Nutrients": 15}
-        self.printAllStock()
         self.updateTree()
-        self.printAllStock()
         self.updateRoots()
-        self.printAllStock()
         self.updateBranch()
         self.printAllStock()
         return self.treeHealth.updateHealth(self.resourceStock)
@@ -300,6 +298,7 @@ class Tree:
         self.BlockGrid[position.y][position.x]["NodeId"] = self.rootIdCounter
 
         self.rootIdCounter += 1
+        self.update()
         return listDict
 
 
@@ -362,6 +361,7 @@ class Tree:
                 if upgrade is not None:
                     print("Upgrading to " + upgrade)
                     node.addCondition(upgrade)
+                    self.update()
                     return "An image File"
             else:
                 print("Cant afford upgrade")
