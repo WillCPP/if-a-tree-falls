@@ -108,15 +108,16 @@ class Node():
                 if name == "All":
                     for resource in listDict:
                         resource.value = modifier.modFunction(resource.value)
-                inList = False
-                for resource in listDict:
-                        if resource.name == name:
-                            resource.value = modifier.modFunction(resource.value)
-                            inlist = True
-                if not inList:
-                    resource = resourceDict[modifier.resoureName]
-                    resource.value = modifier.modFunction(0)
-                    listDict.append(resource)
+                else:
+                    inList = False
+                    for resource in listDict:
+                            if resource.name == name:
+                                resource.value = modifier.modFunction(resource.value)
+                                inlist = True
+                    if not inList:
+                        resource = resourceDict[modifier.resoureName]
+                        resource.value = modifier.modFunction(0)
+                        listDict.append(resource)
         return listDict
 
     def addCondition(self, condition):
@@ -195,8 +196,10 @@ class Node():
 
     def upgradeStage(self):
         if self.nodeType == "New Branch" :
+            self.nodeType = "Medium Branch"
             return "Medium Branch"
         elif self.nodeType == "Medium Branch" :
+            self.nodeType ="Large Branch"
             return "Large Branch"
         else:
             return None
@@ -270,6 +273,7 @@ class Tree:
 
     def getBranch(self, id):
         for branch in self.branchList:
+            print(branch)
             if branch.id == id:
                 return branch
         return None
@@ -320,9 +324,9 @@ class Tree:
         if x < 0 or y < 0 or x > self.maxGridSizeX or y > self.maxGridSizeY:
             print("branch check off grid")
             return -1
-        nodeId = self.BlockGrid[y][x].get("NodeId")
+        nodeId = 0#self.BlockGrid[y][x].get("NodeId")
         print("Branch on block return " + str(nodeId))
-        if  nodeId!= -1:
+        if  nodeId != -1:
             return nodeId
         return -1
 
@@ -361,7 +365,7 @@ class Tree:
             if checkRequirements(requirement, self.resourceStock):
                 if upgrade is not None:
                     print("Upgrading to " + upgrade)
-                    node.addCondition(upgrade)
+                    node.addCondition(conditionDict[upgrade])
                     self.update()
                     return "An image File"
             else:
