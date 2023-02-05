@@ -233,6 +233,7 @@ class Tree:
         self.rootIdCounter += 1
         startBranch = Node(self.branchIdCounter, "New Branch", startBranchPoint, self.BlockGrid[startBranchPoint.y][startBranchPoint.x].get("Block"),-1, startBranchPoint)
         self.BlockGrid[startingPoint.y][startingPoint.x]["NodeId"] = self.branchIdCounter
+        print(str(self.BlockGrid[startingPoint.y][startingPoint.x]["NodeId"]))
         self.branchList.append(startBranch)
         self.branchIdCounter += 1
         self.treeHealth = TreeHealth(10, 10)
