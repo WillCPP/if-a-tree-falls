@@ -95,8 +95,8 @@ class Node():
     def startOrenitation(self):
         divx = self.parentPosition.x - self.position.x
         divy = self.parentPosition.y - self.position.y
-        print(divx)
-        print(divy)
+        #print(divx)
+        #print(divy)
         if divx > 0:
             self.west = True
         if divx < 0:
@@ -193,6 +193,7 @@ class Tree:
         #self, id, type, position, block, parentId, parentPosition
         startRoot = Node(self.rootIdCounter, "Root", startingPoint, self.BlockGrid[startingPoint.y][startingPoint.x].get("Block"),-1, startingPoint)
         self.rootList.append(startRoot)
+        self.BlockGrid[startingPoint.y][startingPoint.x]["NodeId"] = self.rootIdCounter
         self.rootIdCounter += 1
         startBranch = Node(self.branchIdCounter, "Branch", startBranchPoint, self.BlockGrid[startBranchPoint.y][startBranchPoint.x].get("Block"),-1, startBranchPoint)
         self.branchList.append(startBranch)
@@ -237,9 +238,9 @@ class Tree:
 
     def addRoot(self, position, parentId):
         parentRoot = self.getParentRoot(parentId)
-        print(self.BlockGrid[position.y][position.x].get("Block"))
+        #print(self.BlockGrid[position.y][position.x].get("Block"))
         print("Adding Root At " + str(position) + " ParentId: " + str(parentId))
-        print(parentRoot)
+        #print(parentRoot)
         if  parentRoot is  None:
             newRoot = Node(self.rootIdCounter, "Root", position, self.BlockGrid[position.y][position.x].get("Block"),-1)
 
@@ -256,6 +257,7 @@ class Tree:
 
     def rootOnBlock(self, x, y):
         if x < 0 or y < 0 or x > self.maxGridSizeX or y > self.maxGridSizeY:
+            print("Root check off grid")
             return -1
         nodeId = self.BlockGrid[y][x].get("NodeId")
         if  nodeId!= -1:
@@ -264,6 +266,7 @@ class Tree:
 
     def tryToAddRoot(self, x, y):
         if self.rootOnBlock(x , y) != -1:
+            print("Root on Position")
             return
         northRoot = self.rootOnBlock(x ,y-1)
         westRoot =  self.rootOnBlock(x-1 , y)
@@ -278,6 +281,8 @@ class Tree:
             self.addRoot(pos, eastRoot)
         elif southRoot != -1:
             self.addRoot(pos, southRoot)
+        else:
+            print("No root found near position X " + str(x) + " Y " + str(y))
 
 
 
