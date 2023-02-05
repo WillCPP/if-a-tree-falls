@@ -11,12 +11,12 @@ class Block:
     def __str__(self):
         return "Block id: "+ str(self.id) + " Name: " + self.name
 
-# resourceDict = {
-#
-#      [Resource(0, "Sun", ),
-#      Resource(1, "Water"),
-#      Resource(2, "Nutrients")]
-#   }
+resourceDict = {
+
+     "Sun" :Resource(0, "Sun", 0),
+     "Water" :Resource(1, "Water", 0),
+     "Nutrients": Resource(2, "Nutrients", 0)
+   }
 
 blockDict = {
 

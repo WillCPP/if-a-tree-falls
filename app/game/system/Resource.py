@@ -6,9 +6,13 @@ class Resource:
         self.name = name
         self.value = value
 
-# resourceDict = {
-#
-#      [Resource(0, "Sun", ),
-#      Resource(1, "Water"),
-#      Resource(2, "Nutrients")]
-#   }
+    def __eq__(self, other):
+        self.id == other.id
+
+
+resourceDict = {
+
+     "Sun" :Resource(0, "Sun", 0),
+     "Water" :Resource(1, "Water", 0),
+     "Nutrients": Resource(2, "Nutrients", 0)
+   }

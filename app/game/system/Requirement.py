@@ -24,6 +24,6 @@ requirementDict = {
 def checkRequirements(requirement, resourceStock):
     for resource in requirement.resourceList:
         if resourceStock[resource.name] < resource.value:
-            print("Not enough " + resource.name + " to add/update " + requirement.name)
+            #print("Not enough " + resource.name + " to add/update " + requirement.name)
             return False
     return True

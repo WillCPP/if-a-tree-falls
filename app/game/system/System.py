@@ -104,11 +104,19 @@ class Node():
             listDict.append(copy.deepcopy(resource))
         for condition in self.conditionList:
             for modifier in condition.modList:
-                if modifier.resoureName == "All":
+                name = modifier.resoureName
+                if name == "All":
                     for resource in listDict:
                         resource.value = modifier.modFunction(resource.value)
-                    if modifier.resoureName == modifier.resoureName:
-                        resource.value = modifier.modFunction(resource.value)
+                inList = False
+                for resource in listDict:
+                        if resource.name == name:
+                            resource.value = modifier.modFunction(resource.value)
+                            inlist = True
+                if not inList:
+                    resource = resourceDict[modifier.resoureName]
+                    resource.value = modifier.modFunction(0)
+                    listDict.append(resource)
         return listDict
 
     def addCondition(self, condition):
@@ -193,7 +201,7 @@ class Tree:
     maxGridSizeY = 14
 
     #dict with id of resource as key
-    resourceStock = {"Sun": 0, "Water": 0, "Nutrients": 0}
+    resourceStock = {"Sun": 5, "Water": 5, "Nutrients": 5}
     BlockGrid = []
 
     def _gen_row(self, idRow):
