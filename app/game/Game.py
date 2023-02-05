@@ -52,7 +52,6 @@ class Game:
 
             t_e = time.time()
             if t_e - t_s > 2:
-                print("wat")
                 self.tree.update()
                 t_s = t_e
              
