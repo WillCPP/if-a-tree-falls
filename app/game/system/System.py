@@ -325,7 +325,7 @@ class Tree:
             return nodeId
         return -1
 
-    
+
     def tryToAddRoot(self, x, y):
         if self.rootOnBlock(x , y) != -1:
             print("Root on Position")
@@ -353,7 +353,7 @@ class Tree:
     def tryBranch(self,x , y):
         nodeId = self.branchOnBlock(x, y)
         if nodeId != -1:
-            node = getBranch(nodeId)
+            node = self.getBranch(nodeId)
             requirement = requirementDict[node.nodeType]
             upgrade = node.upgradeStage()
             if checkRequirements(requirement, self.resourceStock):
