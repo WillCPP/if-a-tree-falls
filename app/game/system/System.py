@@ -69,7 +69,7 @@ class Node():
         self.parentPosition = parentPosition
         if parentId == -1:
             north = True
-            self.orenitation = getOrenitation()
+            self.orenitation = self.getOrenitation()
         else:
             self.startOrenitation()
         print(self)
@@ -97,8 +97,8 @@ class Node():
     #     return false
     def calculateFlows(self):
         listDict = []
-        for resource in self.block.resourceList:
-            for 
+        #for resource in self.block.resourceList:
+            #for
 
     def startOrenitation(self):
         divx = self.parentPosition.x - self.position.x
