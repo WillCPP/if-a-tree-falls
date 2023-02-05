@@ -45,7 +45,7 @@ class Game:
                     if keys[pygame.K_RIGHT]:
                         self.cursor.move_right()
                     if keys[pygame.K_RETURN] or keys[pygame.K_SPACE]:
-                        if self.cursor.pos_y < 165:
+                        if self.cursor.pos_y > 165:
                             self.fg.addFGElement(self.tree.tryToAddRoot(int(self.cursor.pos_x / 32), int(self.cursor.pos_y / 32)))
                         else:
                             self.tree.tryBranch(int(self.cursor.pos_x / 32), int(self.cursor.pos_y / 32))
