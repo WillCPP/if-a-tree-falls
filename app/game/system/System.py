@@ -201,7 +201,7 @@ class Tree:
     maxGridSizeY = 14
 
     #dict with id of resource as key
-    resourceStock = {"Sun": 5, "Water": 5, "Nutrients": 5}
+    resourceStock = {"Sun": 0, "Water": 0, "Nutrients": 0}
     BlockGrid = []
 
     def _gen_row(self, idRow):
@@ -236,16 +236,29 @@ class Tree:
     def updateRoots(self):
         for root in self.rootList:
             for resource in root.calculateFlows():
-                self.resourceStock.update({resource.name: resource.value})
+                self.resourceStock.update({resource.name: resource.value + self.resourceStock[resource.name]})
 
     def  updateBranch(self):
         for branch in self.branchList:
             for resource in branch.calculateFlows():
-                    self.resourceStock.update({resource.name: resource.value})
+                    self.resourceStock.update({resource.name: resource.value+ self.resourceStock[resource.name]})
+    def  updateTree(self):
+        self.resourceStock.update({"Sun": 15 + self.resourceStock["Sun"]})
+        self.resourceStock.update({"Water": 15 + self.resourceStock["Water"]})
+        self.resourceStock.update({"Nutrients": 15 + self.resourceStock["Nutrients"]})
+
+    def printAllStock(self):
+        print(self.resourceStock)
 
     def update(self):
+        self.resourceStock = {"Sun": 15, "Water": 15, "Nutrients": 15}
+        self.printAllStock()
+        self.updateTree()
+        self.printAllStock()
         self.updateRoots()
+        self.printAllStock()
         self.updateBranch()
+        self.printAllStock()
         return self.treeHealth.updateHealth(self.resourceStock)
 
     def getBranch(self, id):
