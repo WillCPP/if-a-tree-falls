@@ -67,8 +67,9 @@ class Node():
         self.block = block
         self.parentId = parentId
         self.parentPosition = parentPosition
+        self.addCondition(conditionDict[nodeType])
         if parentId == -1:
-            north = True
+            self.north = True
             self.orenitation = self.getOrenitation()
         else:
             self.startOrenitation()
@@ -97,16 +98,30 @@ class Node():
     #     return false
     def calculateFlows(self):
         listDict = []
-        #for resource in self.block.resourceList:
-            #for
+        for resource in self.block.resourceList:
+            listDict.append(copy.deepcopy(resource))
+        for condition in self.conditionList:
+            for modifier in condition.modList:
+                if modifier.resoureName == "All":
+                    for resource in listDict:
+                        resource.value = modifier.modFunction(resource.value)
+                    if modifier.resoureName == modifier.resoureName:
+                        resource.value = modifier.modFunction(resource.value)
+        return listDict
+
+    def addCondition(self, condition):
+        self.conditionList.append(condition)
+
+    def removeCondition(self, condition):
+        self.condition.remove(condition)
 
     def startOrenitation(self):
         divx = self.parentPosition.x - self.position.x
         divy = self.parentPosition.y - self.position.y
         if divx > 0:
-            self.west = True
-        if divx < 0:
             self.east = True
+        if divx < 0:
+            self.west = True
         if divy > 0:
             self.north = True
         if divy < 0:
@@ -117,9 +132,9 @@ class Node():
         divx = self.position.x - child.position.x
         divy = self.position.y - child.position.y
         if divx < 0:
-            self.west = True
-        if divx > 0:
             self.east = True
+        if divx > 0:
+            self.west = True
         if divy < 0:
             self.north = True
         if divy > 0:
@@ -205,27 +220,23 @@ class Tree:
     def __repr__(self):
         return "Tree: Resource Stock: " #+ self.resourceStock
 
-    def updateResources(self, flow, flowDirection):
-        id = flow.resource.id
-        currentStock = self.resourceStock.get(id)
-        if flowDirection:
-            self.resourceStock.update(id, currentStock + flow.rate)
-        else:
-            self.resourceStock.update(id, currentStock - flow.rate)
+    # def updateResources(self, flow, flowDirection):
+    #     id = flow.resource.id
+    #     currentStock = self.resourceStock.get(id)
+    #     if flowDirection:
+    #         self.resourceStock.update(id, currentStock + flow.rate)
+    #     else:
+    #         self.resourceStock.update(id, currentStock - flow.rate)
 
     def updateRoots(self):
         for root in self.rootList:
-            for inFlow in root.inFlowList:
-                updateResources(inFlow, True)
-            for outFlow in root.outFlowList:
-                updateResources(outFlow, False)
+            for resource in root.calculateFlows():
+                self.resourceStock.update({resource.name: resource.value})
 
     def  updateBranch(self):
         for branch in self.branchList:
-            for inFlow in branch.inFlowList:
-                updateResources(inFlow, True)
-            for outFlow in branch.outFlowList:
-                updateResources(outFlow, False)
+            for resource in branch.calculateFlows():
+                    self.resourceStock.update({resource.name: resource.value})
 
     def update(self):
         self.updateRoots()

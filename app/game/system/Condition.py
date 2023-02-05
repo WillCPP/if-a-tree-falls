@@ -1,13 +1,20 @@
 
 class Condition:
+    id : int
     name : str
     desc: str
     modList = []
 
-    def __init__(self, name, desc, modL):
+    def __init__(self,id, name, desc, modL):
+        self.id = id
         self.name = name
         self.desc = desc
         self.modList = modL
+
+    def __eq__(self, other):
+        if self.id == other.id:
+            return True
+        return False
 
 class Modifiers:
     resoureName : str
@@ -19,10 +26,12 @@ class Modifiers:
         self.passFunc = passFunc
 
 conditionDict = {
-    "Large" : Condition("Large", "", [Modifiers("All", lambda a : a * 4)]),
-    "Medium" : Condition("Medium", "", [Modifiers("All", lambda a : a * 2)]),
-    "Small" : Condition("Small", "", [Modifiers("All", lambda a : a * 1)]),
-    "Start" : Condition("Start", "", [Modifiers("All", lambda a : a * 0), Modifiers("Sun", lambda a : a - 2), Modifiers("Water", lambda a : a - 2), Modifiers("Nutrients", lambda a : a - 2)]),
-    "Dying" : Condition("Dying", "", [Modifiers("All", lambda a : a * .25)]),
-    "Dead" : Condition("Dead", "", [Modifiers("All", lambda a : a * 0)])
+    "Root" : Condition(0,"Root", "", [Modifiers("Sun", lambda a : a - 2), Modifiers("Water", lambda a : a - 1), Modifiers("Nutrients", lambda a : a - 1)]),
+    "Branch" : Condition(1,"Branch", "", [Modifiers("Sun", lambda a : a + 20), Modifiers("Water", lambda a : a - 4), Modifiers("Nutrients", lambda a : a - 4)]),
+    "Large" : Condition(2,"Large", "", [Modifiers("All", lambda a : a * 4)]),
+    "Medium" : Condition(3,"Medium", "", [Modifiers("All", lambda a : a * 2)]),
+    "Small" : Condition(4,"Small", "", [Modifiers("All", lambda a : a * 1)]),
+    "Start" : Condition(5,"Start", "", [Modifiers("All", lambda a : a * 0), Modifiers("Sun", lambda a : a - 2), Modifiers("Water", lambda a : a - 2), Modifiers("Nutrients", lambda a : a - 2)]),
+    "Dying" : Condition(6,"Dying", "", [Modifiers("All", lambda a : a * .25)]),
+    "Dead" : Condition(7,"Dead", "", [Modifiers("All", lambda a : a * 0)])
 }
