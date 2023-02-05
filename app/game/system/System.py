@@ -235,7 +235,7 @@ class Tree:
         self.BlockGrid[startingPoint.y][startingPoint.x]["NodeId"] = self.branchIdCounter
         self.branchList.append(startBranch)
         self.branchIdCounter += 1
-        self.treeHealth = TreeHealth(50, 50)
+        self.treeHealth = TreeHealth(10, 10)
 
 
     def __repr__(self):
@@ -321,6 +321,7 @@ class Tree:
             print("branch check off grid")
             return -1
         nodeId = self.BlockGrid[y][x].get("NodeId")
+        print("Branch on block return " + str(nodeId))
         if  nodeId!= -1:
             return nodeId
         return -1
@@ -351,6 +352,7 @@ class Tree:
         return None
 
     def tryBranch(self,x , y):
+        print(" Check On X" + str(x) + " Y " + str(y))
         nodeId = self.branchOnBlock(x, y)
         if nodeId != -1:
             node = self.getBranch(nodeId)
