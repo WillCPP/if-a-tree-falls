@@ -37,14 +37,13 @@ class Game:
                         self.cursor.move_left()
                     if keys[pygame.K_RIGHT]:
                         self.cursor.move_right()
-                    if keys[pygame.K_RETURN]:
+                    if keys[pygame.K_RETURN] or keys[pygame.K_SPACE]:
                         self.fg.addFGElement(self.tree.tryToAddRoot(int(self.cursor.pos_x / 32), int(self.cursor.pos_y / 32)))
             
-            #screen.fill((30, 30, 30))
             self.bg.draw_background(screen)
             self.fg.draw_foreground(screen)
             self.cursor.draw(screen)
-            self.ui.update_ui_surface(5, 5, 5)
+            self.ui.update_ui_surface(self.cursor, self.tree.resourceStock)
             self.ui.draw_ui(screen)
             pygame.display.update()
 
