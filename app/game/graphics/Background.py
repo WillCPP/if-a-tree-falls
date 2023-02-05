@@ -12,16 +12,16 @@ class Background:
     def _gen_bg(self):
         block_sky = pygame.Surface((32, 32))
         block_sky.fill(pygame.Color("cadetblue2"))
-        block_soil = pygame.Surface((32, 32))
-        block_soil.fill(pygame.Color("brown1"))
-        block_groundwater = pygame.Surface((32, 32))
-        block_groundwater.fill(pygame.Color("blue4"))
-        block_organic = pygame.Surface((32, 32))
-        block_organic.fill(pygame.Color("brown4"))
-        block_sand = pygame.Surface((32, 32))
-        block_sand.fill(pygame.Color("sandybrown"))
-        block_clay = pygame.Surface((32, 32))
-        block_clay.fill(pygame.Color("darkgrey"))
+        block_soil = pygame.image.load("resources/ground_materials/soil.png")
+        #block_soil.fill(pygame.Color("brown1"))
+        block_groundwater = pygame.image.load("resources/ground_materials/groundwater.png")
+        #block_groundwater.fill(pygame.Color("blue4"))
+        block_organic = pygame.image.load("resources/ground_materials/organicMatter.png")
+        #block_organic.fill(pygame.Color("brown4"))
+        block_sand = pygame.image.load("resources/ground_materials/sand.png")
+        #block_sand.fill(pygame.Color("sandybrown"))
+        block_clay = pygame.image.load("resources/ground_materials/clay.png")
+        #block_clay.fill(pygame.Color("darkgrey"))
         
         block_array = [block_soil, block_groundwater, block_organic, block_sand, block_clay, block_sky]
         

@@ -1,16 +1,21 @@
 import pygame
 from game.graphics.Background import Background
 from game.Cursor import Cursor
+from game.system.System import Tree
+from game.graphics.UI import UI
 
 class Game:
 
     def __init__(self):
         self.bg = Background()
         self.cursor = Cursor()
+        self.tree = Tree(self.bg.bg_array)
+        self.ui = None
         return
 
     def start(self):
         pygame.init()
+        self.ui = UI()
         pygame.key.set_repeat(250)
         screen = pygame.display.set_mode((1024, 480))
         clock = pygame.time.Clock()
@@ -34,6 +39,8 @@ class Game:
             #screen.fill((30, 30, 30))
             self.draw_background(screen)
             self.cursor.draw(screen)
+            self.ui.update_ui_surface(5, 5, 5)
+            self.ui.draw_ui(screen)
             pygame.display.update()
 
             clock.tick(60)
@@ -41,3 +48,5 @@ class Game:
     def draw_background(self, screen):
         screen.blits(tuple(self.bg.bg_args))
         
+    def draw_ui(self, screen):
+        screen.blit(self.ui.ui_surface, (self.ui.pos_x, self.ui.pos_y))
