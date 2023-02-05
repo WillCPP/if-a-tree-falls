@@ -4,6 +4,7 @@ from game.graphics.Foreground import Foreground
 from game.Cursor import Cursor
 from game.system.System import Tree
 from game.graphics.UI import UI
+import time
 
 class Game:
 
@@ -26,6 +27,8 @@ class Game:
         screen = pygame.display.set_mode((1024, 480))
         clock = pygame.time.Clock()
         dt = 0
+        t_s = time.time()
+        t_e = 0
         while True:
             events = pygame.event.get()
             for e in events:
@@ -46,8 +49,13 @@ class Game:
             
             if self.tree.treeHealth.currentHealth < 0:
                 self.lose = True
+
+            t_e = time.time()
+            if t_e - t_s > 2:
+                print("wat")
+                self.tree.update()
+                t_s = t_e
              
-            self.tree.update()
             self.bg.draw_background(screen)
             self.fg.draw_foreground(screen)
             self.cursor.draw(screen)
