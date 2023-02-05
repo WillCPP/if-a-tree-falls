@@ -26,7 +26,6 @@ class Foreground:
         self._root_dict["Root_W"] = pygame.image.load("resources/roots/Root_W.png")
         self._root_dict["Root_NWE"] = pygame.image.load("resources/roots/Root_NWE.png")
 
-
     def addFGElement(self, l):
         if l is None:
             return
