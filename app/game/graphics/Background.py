@@ -28,7 +28,7 @@ class Background:
             for j, y in enumerate(x):
                 self.bg_args.append((block_array[self.bg_array[i][j]], (j*32, i*32)))
 
-        self._bg = pygame.image.load("resources/background.png")
+        self._bg = pygame.image.load("resources/background2.png")
         self.bg_args.append((self._bg, (0, 0))) 
 
     def _gen_row_sky(self):
