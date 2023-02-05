@@ -271,7 +271,7 @@ class Tree:
 
     def getBranch(self, id):
         for branch in self.branchList:
-            if branch.id == Id:
+            if branch.id == id:
                 return branch
         return None
 
