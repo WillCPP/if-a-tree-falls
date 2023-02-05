@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from .Block import *
 from .Resource import *
+from .Condition import *
 
 class ResourceStock():
     id: int
@@ -48,6 +49,7 @@ class Node():
     orenitation: str
     parentId: int
     parentPosition: Position
+    conditionList = []
 
     north = False
     south = False
@@ -95,8 +97,6 @@ class Node():
     def startOrenitation(self):
         divx = self.parentPosition.x - self.position.x
         divy = self.parentPosition.y - self.position.y
-        #print(divx)
-        #print(divy)
         if divx > 0:
             self.west = True
         if divx < 0:
