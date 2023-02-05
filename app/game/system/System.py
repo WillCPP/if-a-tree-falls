@@ -123,9 +123,9 @@ class Node():
         if divx < 0:
             self.west = True
         if divy > 0:
-            self.north = True
-        if divy < 0:
             self.south = True
+        if divy < 0:
+            self.north = True
         self.orenitation = self.getOrenitation()
 
     def addChildOrenitation(self, child):
@@ -242,6 +242,7 @@ class Tree:
         self.updateRoots()
         self.updateBranch()
 
+
     def getParentRoot(self, parentId):
         for root in self.rootList:
             print ("THE ROOOTS: " + str(root.id))
@@ -286,7 +287,7 @@ class Tree:
         if self.rootOnBlock(x , y) != -1:
             print("Root on Position")
             return
-        northRoot = self.rootOnBlock(x ,y-1)
+        northRoot = self.rootOnBlock(x ,y+1)
         westRoot =  self.rootOnBlock(x-1 , y)
         eastRoot = self.rootOnBlock(x+1 ,y)
         southRoot =  self.rootOnBlock(x , y-1)
