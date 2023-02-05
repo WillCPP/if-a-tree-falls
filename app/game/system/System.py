@@ -126,46 +126,40 @@ class Node():
         west = self.west
         east = self.east
         if north and south and east and west:
-            return "quad"
+            return "Root_NSWE"#"quad"
         elif north and south and east:
-            return "tripleNSE"
+            return "Root_NSE"#"tripleNSE"
         elif north and south and west:
-            return "tripleNSW"
+            return "Root_NSW"#"tripleNSW"
         elif north and east and west:
-            return  "tripleNWE"
+            return "Root_NWE"#"tripleNWE"
         elif south and east and west:
-            return "tripleSWE"
+            return "Root_SWE"#"tripleSWE"
         elif north and west:
-            return "cornerNW"
+            return "Root_NW"#"cornerNW"
         elif north and east:
-            return "cornerNE"
+            return "Root_NE"#"cornerNE"
         elif south and west:
-            return "cornerSW"
+            return "Root_SW"#"cornerSW"
         elif south and east:
-            return  "cornerSE"
+            return  "Root_SE"#"cornerSE"
         elif north and south:
-            return "straightNS"
+            return "Root_NS"#"straightNS"
         elif east and west:
-            return "straightWE"
+            return "Root_WE"#"straightWE"
         elif north:
-            return "endN"
+            return "Root_N"#"endN"
         elif south:
-            return "endS"
+            return "Root_S"#"endS"
         elif west:
-            return "endW"
+            return "Root_W"#"endW"
         elif east:
-            return "endE"
+            return "Root_E"#"endE"
         else:
             return "empty"
 
-
-
-
-
 #class BranchNodes(Node):
-
 #class BlockGrid(groundArray):
-
 
 class Tree:
     rootList = []
@@ -241,16 +235,20 @@ class Tree:
         #print(self.BlockGrid[position.y][position.x].get("Block"))
         print("Adding Root At " + str(position) + " ParentId: " + str(parentId))
         #print(parentRoot)
+        listDict = []
         if  parentRoot is  None:
             newRoot = Node(self.rootIdCounter, "Root", position, self.BlockGrid[position.y][position.x].get("Block"),-1)
-
+            listDict.append({"x":position.x, "y":position.y, "file": newRoot.orenitation})
         else:
             newRoot = Node(self.rootIdCounter, "Root", position, self.BlockGrid[position.y][position.x].get("Block"),parentId, parentRoot.position)
             parentRoot.addChildOrenitation(newRoot)
+            listDict.append({"x":position.x, "y":position.y, "file": newRoot.orenitation})
+            listDict.append({"x":parentRoot.position.x, "y":parentRoot.position.y, "file": parentRoot.orenitation})
         self.rootList.append(newRoot)
         self.BlockGrid[position.y][position.x]["NodeId"] = self.rootIdCounter
 
         self.rootIdCounter += 1
+        return listDict
 
     def positionBlockInfo(self, x, y):
         return Block(self.BlockGrid[y][x].get("Block"))
@@ -274,16 +272,16 @@ class Tree:
         southRoot =  self.rootOnBlock(x , y-1)
         pos = Position(x,y)
         if northRoot != -1:
-            self.addRoot(pos, northRoot)
+            return self.addRoot(pos, northRoot)
         elif westRoot != -1:
-            self.addRoot(pos, westRoot)
+            return self.addRoot(pos, westRoot)
         elif eastRoot != -1:
-            self.addRoot(pos, eastRoot)
+            return self.addRoot(pos, eastRoot)
         elif southRoot != -1:
-            self.addRoot(pos, southRoot)
+            return self.addRoot(pos, southRoot)
         else:
             print("No root found near position X " + str(x) + " Y " + str(y))
-
+            return None
 
 
 

@@ -13,4 +13,6 @@ class TreeDriver:
 
     def start(self):
         self.tree.tryToAddRoot(16,5)
+        self.tree.tryToAddRoot(13,5)
+        self.tree.tryToAddRoot(15,6)
         self.tree.update()
