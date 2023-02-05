@@ -135,9 +135,9 @@ class Node():
             self.east = True
         if divx > 0:
             self.west = True
-        if divy < 0:
-            self.north = True
         if divy > 0:
+            self.north = True
+        if divy < 0:
             self.south = True
         self.orenitation = self.getOrenitation()
         ## switch statement to set orenitation
