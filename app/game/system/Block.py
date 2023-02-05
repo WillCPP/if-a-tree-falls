@@ -8,6 +8,9 @@ class Block:
         self.name = name
         self.resourceList = resourceList
 
+    def __str__(self):
+        return "Block id: "+ str(self.id) + " Name: " + self.name
+
 resourceDict = {
     "Sun" : Resource(0, "Sun"),
     "Water" : Resource(1, "Water"),

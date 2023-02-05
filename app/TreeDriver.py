@@ -12,4 +12,5 @@ class TreeDriver:
         self.tree = Tree(self.bg.bg_array)
 
     def start(self):
+        self.tree.tryToAddRoot(16,5)
         self.tree.update()
