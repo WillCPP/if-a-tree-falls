@@ -325,6 +325,7 @@ class Tree:
             return nodeId
         return -1
 
+    
     def tryToAddRoot(self, x, y):
         if self.rootOnBlock(x , y) != -1:
             print("Root on Position")

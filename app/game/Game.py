@@ -50,15 +50,17 @@ class Game:
                         else:
                             self.tree.tryBranch(int(self.cursor.pos_x / 32), int(self.cursor.pos_y / 32))
 
-            
+
             if self.tree.treeHealth.currentHealth < 0:
                 self.lose = True
+            if self.tree.branchList[0].nodeType == "Large Branch":
+                self.win True
 
             t_e = time.time()
             if t_e - t_s > 2:
                 self.tree.update()
                 t_s = t_e
-             
+
             self.bg.draw_background(screen)
             self.fg.draw_foreground(screen)
             self.cursor.draw(screen)
@@ -68,4 +70,3 @@ class Game:
             pygame.display.update()
 
             dt = clock.tick(60)
-
