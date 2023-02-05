@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from .Block import *
 from .Resource import *
 from .Condition import *
+import copy
 
 class ResourceStock():
     id: int
@@ -42,10 +43,10 @@ class Node():
     nodeType: str
     position: Position
     block: Block
-    outFlowList = []
-    inFlowList = []
-    minInFlow : Flow
-    maxOutFlow: float
+    #outFlowList = []
+    #inFlowList = []
+    #minInFlow : Flow
+    #maxOutFlow: float
     orenitation: str
     parentId: int
     parentPosition: Position
@@ -67,32 +68,37 @@ class Node():
         self.parentId = parentId
         self.parentPosition = parentPosition
         if parentId == -1:
-            self.orenitation = "straightNS"
+            north = True
+            self.orenitation = getOrenitation()
         else:
             self.startOrenitation()
         print(self)
 
-    def totalFlow(self):
-        sum = 0
-        for aFlow in outFlowList:
-            sum += aFlow.rate
-        return sum
-
-    def canIncreaseResourceRate(resourceId):
-        if (totalFlow() >= maxOutFlow):
-            return false
-        for flow in outFlowList:
-            if (flow.resource.id == resourceId):
-                #if (flow.canIncreaseRate()):
-                return true
-        return false
-
-    def canDecreaseResourceRate(resourceId):
-        for flow in outFlowList:
-            if (flow.resource.id == resourceId):
-                if (flow.canDecreaseRate()):
-                    return true
-        return false
+    # def totalFlow(self):
+    #     sum = 0
+    #     for aFlow in outFlowList:
+    #         sum += aFlow.rate
+    #     return sum
+    #
+    # def canIncreaseResourceRate(resourceId):
+    #     if (totalFlow() >= maxOutFlow):
+    #         return false
+    #     for flow in outFlowList:
+    #         if (flow.resource.id == resourceId):
+    #             #if (flow.canIncreaseRate()):
+    #             return true
+    #     return false
+    #
+    # def canDecreaseResourceRate(resourceId):
+    #     for flow in outFlowList:
+    #         if (flow.resource.id == resourceId):
+    #             if (flow.canDecreaseRate()):
+    #                 return true
+    #     return false
+    def calculateFlows(self):
+        listDict = []
+        for resource in self.block.resourceList:
+            for 
 
     def startOrenitation(self):
         divx = self.parentPosition.x - self.position.x
@@ -118,6 +124,7 @@ class Node():
             self.north = True
         if divy > 0:
             self.south = True
+        self.orenitation = self.getOrenitation()
         ## switch statement to set orenitation
 
     def getOrenitation(self):
@@ -164,6 +171,7 @@ class Node():
 class Tree:
     rootList = []
     branchList = []
+    updateCheck = []
     maxGridSizeX = 31
     maxGridSizeY = 14
     #dict with id of resource as key
@@ -172,7 +180,7 @@ class Tree:
 
     def _gen_row(self, idRow):
         #row = [random.choice(range(5)) for x in range(32)]
-        row = [{"BlockId" : id, "Block": blockDict[id], "NodeId": -1} for id in idRow]
+        row = [{"BlockId" : id, "Block": copy.deepcopy(blockDict[id]), "NodeId": -1} for id in idRow]
         print(len(row))
         return row
 
@@ -192,6 +200,7 @@ class Tree:
         startBranch = Node(self.branchIdCounter, "Branch", startBranchPoint, self.BlockGrid[startBranchPoint.y][startBranchPoint.x].get("Block"),-1, startBranchPoint)
         self.branchList.append(startBranch)
         self.branchIdCounter += 1
+
 
     def __repr__(self):
         return "Tree: Resource Stock: " #+ self.resourceStock
